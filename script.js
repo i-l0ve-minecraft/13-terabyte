@@ -1,5 +1,5 @@
 // ====== СОСТОЯНИЕ ======
-let currentUser = null; // текущий пользователь Firebase
+let currentUser = null;
 let unsubscribePosts = null;
 
 // ====== DOM ЭЛЕМЕНТЫ ======
@@ -12,6 +12,16 @@ const postModal = document.getElementById('postModal');
 const loginForm = document.getElementById('loginForm');
 const postForm = document.getElementById('postForm');
 const loginError = document.getElementById('loginError');
+
+// Проверка, что все элементы найдены
+console.log('adminBtn found:', !!adminBtn);
+console.log('fab found:', !!fab);
+console.log('loginModal found:', !!loginModal);
+console.log('postModal found:', !!postModal);
+console.log('loginForm found:', !!loginForm);
+console.log('postForm found:', !!postForm);
+console.log('db:', typeof db !== 'undefined' ? 'OK' : 'MISSING');
+console.log('auth:', typeof auth !== 'undefined' ? 'OK' : 'MISSING');
 
 // ====== УТИЛИТЫ ======
 function formatDate(timestamp) {
@@ -31,18 +41,16 @@ function escapeHtml(text) {
 
 // ====== АУТЕНТИФИКАЦИЯ ======
 auth.onAuthStateChanged(user => {
+    console.log('Auth state changed. User:', user ? user.email : 'null');
     currentUser = user;
     updateAdminUI();
     if (user) {
-        // Подписываемся на посты
         subscribeToPosts();
     } else {
-        // Отписываемся, если вышли
         if (unsubscribePosts) {
             unsubscribePosts();
             unsubscribePosts = null;
         }
-        // Очищаем контейнер
         renderPosts([]);
     }
 });
@@ -57,6 +65,7 @@ function subscribeToPosts() {
             snapshot.forEach(doc => {
                 posts.push({ id: doc.id, ...doc.data() });
             });
+            console.log('Posts loaded:', posts.length);
             renderPosts(posts);
         }, error => {
             console.error('Ошибка загрузки постов:', error);
@@ -93,6 +102,7 @@ function renderPosts(posts) {
 }
 
 function updateAdminUI() {
+    console.log('Updating admin UI. currentUser:', currentUser ? currentUser.email : 'null');
     if (currentUser) {
         adminBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Выйти';
         fab.style.display = 'flex';
@@ -126,7 +136,9 @@ window.addEventListener('click', (e) => {
 });
 
 // ====== ОБРАБОТЧИКИ ======
+// Кнопка "Админ" в футере
 adminBtn.addEventListener('click', () => {
+    console.log('Admin button clicked');
     if (currentUser) {
         auth.signOut();
     } else {
@@ -135,7 +147,9 @@ adminBtn.addEventListener('click', () => {
     }
 });
 
+// Плавающая кнопка создания поста
 fab.addEventListener('click', () => {
+    console.log('FAB clicked');
     postForm.reset();
     openModal(postModal);
 });
@@ -146,13 +160,14 @@ loginForm.addEventListener('submit', async (e) => {
     const password = document.getElementById('password').value;
     // Фиксированный email администратора — замени на свой!
     const adminEmail = 'admin@mypublicblog.com'; // ← поменяй
+    console.log('Attempting login with email:', adminEmail);
     try {
         await auth.signInWithEmailAndPassword(adminEmail, password);
         loginError.textContent = '';
         closeModal(loginModal);
         document.getElementById('password').value = '';
     } catch (err) {
-        console.error(err);
+        console.error('Login error:', err);
         loginError.textContent = 'Неверный пароль или ошибка входа';
     }
 });
