@@ -1,11 +1,82 @@
 <!DOCTYPE html>
-  <html>
-    <head>
-      <title>13 terabyte
-</title>
-      <p>"sss"</p>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой Паблик</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <header class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>✨ Наш Паблик</h1>
+            <p>Самое интересное — только здесь</p>
+            <button id="adminBtn" class="btn btn-outline-light">
+                <i class="fas fa-lock"></i> Админ
+            </button>
+        </div>
+    </header>
 
-    </head>
-  </html>
+    <main class="container">
+        <div id="postsContainer" class="posts-grid">
+            <!-- Посты будут загружены сюда -->
+        </div>
+        <div id="emptyMessage" class="empty-message" style="display:none;">
+            <i class="fas fa-newspaper"></i>
+            <p>Пока нет ни одной публикации</p>
+        </div>
+    </main>
 
-        
+    <!-- Модальное окно входа -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" data-close="loginModal">&times;</span>
+            <h2><i class="fas fa-user-shield"></i> Вход для админа</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" placeholder="Введите пароль" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Войти</button>
+                <div id="loginError" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно создания поста -->
+    <div id="postModal" class="modal">
+        <div class="modal-content">
+            <span class="close" data-close="postModal">&times;</span>
+            <h2><i class="fas fa-plus-circle"></i> Новый пост</h2>
+            <form id="postForm">
+                <div class="form-group">
+                    <label for="postTitle">Заголовок</label>
+                    <input type="text" id="postTitle" placeholder="О чём пост?" required>
+                </div>
+                <div class="form-group">
+                    <label for="postContent">Текст</label>
+                    <textarea id="postContent" rows="5" placeholder="Содержание..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="postImage">Ссылка на картинку (необязательно)</label>
+                    <input type="url" id="postImage" placeholder="https://...">
+                </div>
+                <button type="submit" class="btn btn-primary">Опубликовать</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Плавающая кнопка создания поста (для админа) -->
+    <button id="fab" class="fab" title="Создать пост" style="display:none;">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <footer>
+        <p>&copy; 2025 Наш Паблик. Все права защищены.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
