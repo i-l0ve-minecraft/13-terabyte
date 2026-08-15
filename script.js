@@ -29,7 +29,7 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// ====== СЛУШАТЕЛЬ АУТЕНТИФИКАЦИИ ======
+// ====== АУТЕНТИФИКАЦИЯ ======
 auth.onAuthStateChanged(user => {
     currentUser = user;
     updateAdminUI();
@@ -42,7 +42,7 @@ auth.onAuthStateChanged(user => {
             unsubscribePosts();
             unsubscribePosts = null;
         }
-        // Очищаем контейнер (посты больше не видны, но они останутся в кэше)
+        // Очищаем контейнер
         renderPosts([]);
     }
 });
