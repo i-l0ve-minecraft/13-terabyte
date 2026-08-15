@@ -10,7 +10,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    <!-- Наш конфиг -->
+    <!-- Конфиг Firebase -->
     <script src="firebase-config.js"></script>
 </head>
 <body>
@@ -19,9 +19,7 @@
         <div class="hero-content">
             <h1>✨ Наш Паблик</h1>
             <p>Самое интересное — только здесь</p>
-            <button id="adminBtn" class="btn btn-outline-light">
-                <i class="fas fa-lock"></i> Админ
-            </button>
+            <!-- Кнопка админа УБРАНА из hero -->
         </div>
     </header>
 
@@ -72,13 +70,17 @@
         </div>
     </div>
 
-    <!-- Плавающая кнопка создания поста -->
+    <!-- Плавающая кнопка создания поста (видна только админу) -->
     <button id="fab" class="fab" title="Создать пост" style="display:none;">
         <i class="fas fa-plus"></i>
     </button>
 
     <footer>
         <p>&copy; 2025 Наш Паблик. Все права защищены.</p>
+        <!-- Маленькая кнопка админа внизу -->
+        <button id="adminBtn" class="btn-admin-footer">
+            <i class="fas fa-lock"></i> Админ
+        </button>
     </footer>
 
     <script src="script.js"></script>
